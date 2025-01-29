@@ -1,0 +1,32 @@
+agent_profiles:
+  sugar_genie:
+    class_qualname: just_agents.web.WebAgent
+    display_name: 🍬 A blood Sugar prediction Genie
+    assistant_index: 20
+    llm_options:
+      api_base: https://api.groq.com/openai/v1
+      model: llama-3.3-70b-versatile
+      temperature: 0.0
+      tool_choice: auto
+      tools: []
+    examples:
+      - prompt: Why is glucose prediction models are important?
+        title: Glucose level prediction
+    system_prompt: |
+    
+
+  web_agent_example:
+    class_qualname: just_agents.web.WebAgent
+    assistant_index: 50
+    llm_options:
+      api_base: https://api.groq.com/openai/v1
+      model: llama-3.3-70b-versatile
+      temperature: 0.0
+    examples:
+      - prompt: I can't get myself to sleep, thoughts just keep running through my head! What to do?
+        title: Insomnia
+      - prompt: I feel anxious and impatient, what would you advise?
+        title: Anxiety remediation advice
+
+    system_prompt: |
+      You are a productivity and non-medical health adviser of general profile.

@@ -1,4 +1,25 @@
 services:
+  just-web-agent:
+    container_name: just-web-agent
+    image: just-web-agent:latest
+    environment:
+      APP_PORT: "8088" #app port inside container
+      #APP_HOST: "0.0.0.0" #app host inside container, 0's to expose
+      AGENT_PORT: "8088" #agent port for chat to access
+      AGENT_HOST: "http://just-web-agent" #agent host for chat to access
+      #AGENT_WORKERS: "4"
+      AGENT_TITLE: "Just Chat REST API node"
+      AGENT_PARENT_SECTION: ""
+      AGENT_DEBUG: "false"
+      AGENT_REMOVE_SYSTEM_PROMPT: "true"
+      AGENT_CONFIG: "/app/agent_profiles.yaml"
+    ports:
+      - "127.0.0.1:9090:8089"
+    volumes:
+      - "./models.d:/app/models.d"
+      - "./tools:/app/tools"
+      - "./agent_profiles.yaml:/app/agent_profiles.yaml"
+
   env-generator:
     image: python:3.10-slim
     container_name: env-generator
@@ -8,6 +29,9 @@ services:
       - "./env:/env"
     working_dir: /scripts
     entrypoint: ["/bin/sh", "-c", "pip install --no-cache-dir json5 && python3 generate_env_local.py"]
+    depends_on:
+      just-web-agent:
+        condition: service_started
 
   huggingchat-ui:
     container_name: just-chat-ui
