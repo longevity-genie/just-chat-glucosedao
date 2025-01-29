@@ -11,7 +11,7 @@ services:
 
   huggingchat-ui:
     container_name: just-chat-ui
-    image: ghcr.io/longevity-genie/chat-ui/chat-ui:latest
+    image: ghcr.io/longevity-genie/chat-ui/chat-ui:sha-325df57
     environment:
       ALLOW_INSECURE_COOKIES: "true"
       INCLUDE_DB: "False"
@@ -22,6 +22,8 @@ services:
     depends_on:
       env-generator:
         condition: service_completed_successfully
+      chat-mongo:
+        condition: service_started
     restart: "no"
 
   chat-mongo:

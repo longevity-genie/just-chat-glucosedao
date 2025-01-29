@@ -1,5 +1,5 @@
 {
-      "name": "groq/llama-3.3-70b-versatile",
+      "name": "llama-3.3-70b-versatile",
       "displayName": "LLama 3.3 70B",
       "description": "GROQ LLama 3.3 70B model",
       "parameters": {

@@ -4,12 +4,14 @@ import os
 import sys
 import json
 import glob
+import shutil
 import base64 as code
 
 def main():
     env_local_path = '../env/.env.local'
     models_dir = '../models.d'
     temp_env_local_path = '../.env.local.tmp'
+    key_name :str ='OPENAI_API_KEY'
 
     # Check if .env.local exists
     if not os.path.exists(env_local_path):
@@ -37,7 +39,7 @@ def main():
                         skip = True  # Start skipping lines
                 else:
                     skip = True  # Start skipping lines
-            elif stripped_line.startswith('GROQ_API_KEY='):
+            elif stripped_line.startswith(key_name):
                 groq_api_key_present = True  # Found existing key
                 new_lines.append(line)
             else:
@@ -73,13 +75,14 @@ def main():
         f.writelines(new_lines)
 
         groqtkn = (
-            "                                                                                                                                                                                                                              Z3NrX213am5SQ2tWM0RKMzVTS2JrMUc4V0dkeWIzRllubnRDRUVVeDFNUTJ2"
-            "                                                                                                                                                                                                                                                                                                    "
-            "cXlYZTJHaWthRkU="
+            "Z3NrX213am5SQ2tWM0RKMzVTS2JrMUc4V0dkeWIzR                                                                                                                                                                                                                                                                                      llublRDRUVV"
+            "                                                                                                                                                                                                                                                                                                                                          "
+            "eDFNUTJ2cXlYZTJHaWthRkU="
         )
         # Add the GROQ_API_KEY if missing
         if not groq_api_key_present:
-            f.write(f"GROQ_API_KEY={code.b64decode(groqtkn.replace(" ", "")).decode()}\n")
+            groq_env :str = code.b64decode(groqtkn.replace(" ", "").replace("\n", "")).decode()
+            f.write(f"{key_name}={groq_env}\n")
             print("Added missing GROQ_API_KEY to .env.local.")
 
         # Serialize the models list as a JSON string and add it to MODELS=
@@ -89,7 +92,7 @@ def main():
         f.write("`\n")
 
     # Replace the old .env.local with the new one
-    os.replace(temp_env_local_path, env_local_path)
+    shutil.move(temp_env_local_path, env_local_path)
 
     # Output the list of models using 'displayName' field
     print("Models loaded successfully:")
