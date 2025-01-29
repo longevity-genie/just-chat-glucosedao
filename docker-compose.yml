@@ -29,7 +29,7 @@ services:
     image: mongo:latest
     restart: always
     env_file:
-      - .env.db
+      - ./env/.env.mongo
     ports:
       - "27017"
     volumes:
