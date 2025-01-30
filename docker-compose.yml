@@ -55,7 +55,7 @@ services:
 
   huggingchat-ui:
     container_name: just-chat-ui
-    image: ghcr.io/longevity-genie/chat-ui/chat-ui:sha-325df57
+    image: ghcr.io/longevity-genie/chat-ui/chat-ui:sha-eeb856a
     environment:
       ALLOW_INSECURE_COOKIES: "true"
       INCLUDE_DB: "False"
