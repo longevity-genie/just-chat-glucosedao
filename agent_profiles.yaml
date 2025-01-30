@@ -5,22 +5,22 @@ agent_profiles:
     assistant_index: 20
     llm_options:
       api_base: https://api.groq.com/openai/v1
-      model: llama-3.3-70b-versatile
+      model: groq/llama-3.3-70b-versatile
       temperature: 0.0
       tool_choice: auto
       tools: []
     examples:
       - prompt: Why is glucose prediction models are important?
         title: Glucose level prediction
-    system_prompt: |
-    
+    system_prompt: | 
+       You are a Glucose level prediction advisor
 
   web_agent_example:
     class_qualname: just_agents.web.WebAgent
     assistant_index: 50
     llm_options:
       api_base: https://api.groq.com/openai/v1
-      model: llama-3.3-70b-versatile
+      model: groq/llama-3.3-70b-versatile
       temperature: 0.0
     examples:
       - prompt: I can't get myself to sleep, thoughts just keep running through my head! What to do?
@@ -28,5 +28,21 @@ agent_profiles:
       - prompt: I feel anxious and impatient, what would you advise?
         title: Anxiety remediation advice
 
-    system_prompt: |
-      You are a productivity and non-medical health adviser of general profile.
+    system_prompt: | #edit here to change system prmpt
+      You are a productivity and non-medical health advisor of general profile.
+
+  chat_naming_agent:
+    class_qualname: just_agents.web.WebAgent
+    display_name: 📜 A naming agent
+    description: ChatUI Chat Titles naming agent
+    assistant_index: 99
+    llm_options:
+      api_base: https://api.groq.com/openai/v1
+      model: groq/llama-3.3-70b-versatile
+      temperature: 0.7
+    examples:
+      - prompt: How are you today?
+        title: Agent name from query
+    system_prompt: | 
+      You are a summarization AI. Summarize the user's request into a single short sentence of four words or less. 
+      Do not try to answer it, only summarize the user's query. Always start your answer with an emoji relevant to the summary
