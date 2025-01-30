@@ -1,7 +1,25 @@
 # just-chat
-Simple one-click deployment of huggingface-chat to interact with LLM
+Make your LLM agent and chat with it simple and fast!
 
-## Install Docker and Docker Compose
+![Easy chat with your Agent](images/screenshot.jpg)
+*Setting up your agent and your chat in few clicks*
+
+## Quick start
+
+Just clone repository and run docker-compose!
+```bash
+git clone https://github.com/winternewt/just-chat.git
+docker compose up
+```
+And the chat with your agent is ready to go!
+
+Then you can edit agent_profiles.yaml to customize it and /tools to empower it with more python tools
+
+The only things you need to install is docker! We give detailed instructions below for both Linux and Windows.
+
+## Detailed instructions
+
+### Install Docker and Docker Compose
 If you never installed Docker and Docker Compose, you can use the following instructions to install them. Otherwise you can skip this step.
 To check if you have Docker and Docker Compose installed, you can use the following commands:
 
@@ -12,8 +30,8 @@ docker-compose --version
 The commands apply to both Linux (bash) and Windows (PowerShell). After this point instaltion split into Linux and Windows.
 
 
-## On Linux
-### Install Docker and Docker-compose Standalone
+### On Linux
+#### Install Docker and Docker-compose Standalone
 
 Refer to the official guides: 
  - [Docker Installation Guide](https://docs.docker.com/engine/install/ubuntu/).
@@ -26,7 +44,7 @@ Refer to the official guides:
   ```
 
 
-### Setup Docker’s apt repository
+#### Setup Docker’s apt repository
 
 ```bash
 # Add Docker's official GPG key:
@@ -149,7 +167,6 @@ To make Docker automatically start:
 Open Docker Desktop.
 Go to Settings → General.
 Enable “Start Docker Desktop when you log in”.
-
 
 
 ## For both operating systems
