@@ -172,3 +172,5 @@ cython_debug/
 
 #Idea
 .idea
+models.d/
+!models.d/README.md
