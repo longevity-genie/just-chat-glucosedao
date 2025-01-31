@@ -250,3 +250,17 @@ docker compose up
    - To run in background mode, use:
      - `docker compose up -d`
    - This prevents port conflicts in future sessions
+
+## Acknowledgments
+
+This project is supported by:
+
+[![HEALES](images/heales.jpg)](https://heales.org/)
+
+*HEALES - Healthy Life Extension Society*
+
+and
+
+[![IBIMA](images/IBIMA.jpg)](https://ibima.med.uni-rostock.de/)
+
+[IBIMA - Institute for Biostatistics and Informatics in Medicine and Ageing Research](https://ibima.med.uni-rostock.de/)
