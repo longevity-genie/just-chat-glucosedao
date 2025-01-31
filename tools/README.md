@@ -1,4 +1,3 @@
-```markdown
 # 📂 tools/ - LLM Utility Tools
 
 This folder contains auxiliary scripts and modules that enhance the functionality of the **LLM (Large Language Model) pipeline**. 
@@ -49,5 +48,3 @@ This will:
 ## 📝 Notes
 - This directory is designed to be **mounted** at runtime to allow flexible tool additions without modifying the core system.
 - If no dependencies are installed and `requirements.txt` is missing, the tools in this folder **will not function** due to missing imports.
-
-```

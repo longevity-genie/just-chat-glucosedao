@@ -16,3 +16,4 @@ This folder (`data/`) is intended for storing arbitrary data that will be made a
   ```yaml
   volumes:
     - ./data:/data
+  ```
