@@ -13,11 +13,41 @@ docker compose up
 ```
 And the chat with your agent is ready to go!
 
-Then you can edit agent_profiles.yaml to customize it and /tools to empower it with more python tools
+You can customize your setup by:
+1. Editing `agent_profiles.yaml` to customize your agent
+2. Adding tools to `/tools` directory to empower your agent
+3. Modifying `docker-compose.yml` for advanced settings (optional)
 
-The only things you need to install is docker! We give detailed instructions below for both Linux and Windows.
+The only requirement is Docker! We provide detailed installation instructions for both Linux and Windows in the [Installation](#detailed-setting-up-instructions) section.
 
-## Detailed instructions
+
+## What can you do with Just-Chat?
+- 🚀 Start chatting with one command ( docker compose up )
+- 🤖 Customize your AI assistant using a YAML file (can be edited with a text editor)
+- 🛠️ Add new capabilities with Python tools (can add additional functions and libraries)
+- 🌐 Talk with agent with a chat web interface at 0.0.0.0:3000
+- 🐳 Run everything in Docker containers
+- 📦 Works without Python or Node.js on your system
+
+
+We use [just-agents](https://github.com/longevity-genie/just-agents) library to initialize agents from YAML, so most of the modern models ( DeepSeek Reasoner, ChatGPT, LLAMA3.3, etc.) are supported. 
+However, you might need to add your own keys to the environment variables. We provide a free Groq key by default but it is very rate-limited. We recommend getting your own keys,  [Groq](https://console.groq.com/playground) can be a good place to start as it is free and contains many open-source models.
+
+## Project Structure
+
+- [`agent_profiles.yaml`](agent_profiles.yaml) - Configure your agents, their personalities and capabilities, example agents provided.
+- [`docker-compose.yml`](docker-compose.yml) - Container orchestration and service configuration
+- [`/tools/`](tools/README.md) - Python tools to extend agent capabilities. Contains example tools and instructions for adding your own tools with custom dependencies
+- [`/models.d/`](models.d/README.md) - ChatUI models data directory (auto-populated at runtime)
+- [`/data/`](data/README.md) - Application data storage if you want to let your agent work with additional data
+- `/env/` - Environment configuration files and settings
+- `/scripts/` - Utility scripts including Docker installation helpers
+- `/volumes/` - Docker volume mounts for persistent storage
+
+
+## Installation
+
+Detailed installation instructions. If you already have Docker and Docker Compose installed, you can probably skip this section.
 
 ### Install Docker and Docker Compose
 If you never installed Docker and Docker Compose, you can use the following instructions to install them. Otherwise you can skip this step.
@@ -28,6 +58,8 @@ docker --version
 docker-compose --version
 ```
 The commands apply to both Linux (bash) and Windows (PowerShell). After this point instaltion split into Linux and Windows.
+
+Note: in some cases `docker-compose` is called `docker compose` (without `-`). It depends on the version of docker compose you have installed.
 
 
 ### On Linux
@@ -44,7 +76,7 @@ Refer to the official guides:
   ```
 
 
-#### Setup Docker’s apt repository
+#### Setup Docker's apt repository
 
 ```bash
 # Add Docker's official GPG key:
@@ -59,12 +91,12 @@ sudo install -m 0755 -d /etc/apt/keyrings
 
 sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
 sudo chmod a+r /etc/apt/keyrings/docker.asc
-#Downloads Docker’s official GPG key (used to verify package authenticity) and saves it to /etc/apt/keyrings/docker.asc.
+#Downloads Docker's official GPG key (used to verify package authenticity) and saves it to /etc/apt/keyrings/docker.asc.
 #Changes file permissions so that all users can read it (a+r).
 
 
 # Add the repository to Apt sources:
-#Adds Docker’s official repository to the system's package sources.
+#Adds Docker's official repository to the system's package sources.
 #dpkg --print-architecture ensures the right package architecture (amd64, arm64, etc.).
 #. /etc/os-release && echo "VERSION_CODENAME" dynamically fetches your Ubuntu version codename (e.g., jammy for Ubuntu 22.04).
 #Writes the repository URL into /etc/apt/sources.list.d/docker.list.
@@ -72,7 +104,7 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
-  $(. /etc/os-release && echo "ЁVERSION_CODENAMEЁ") stable" | \
+  $(. /etc/os-release && echo "VERSION_CODENAME") stable" | \
   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   sudo apt-get update
 
@@ -116,13 +148,13 @@ Hyper-V enabled (if using Windows 10 Pro/Enterprise)
 At least 4GB of RAM (recommended)
 
 Though WSL is not strictly required for installation, it is highly recommended for running Linux-based containers efficiently.
-If you don’t want to use WSL during Docker Desktop installation, uncheck the option "Use WSL 2 instead of Hyper-V".
+If you don't want to use WSL during Docker Desktop installation, uncheck the option "Use WSL 2 instead of Hyper-V".
 Docker will automatically switch to Windows Containers instead of Linux Containers.
 
 Limitations Without WSL:
 -You cannot run Linux-based containers (unless using a full virtual machine).
 -Performance is slower because it uses Hyper-V (Windows 10 Pro/Enterprise) or Windows-native virtualization.
--Some Docker features (e.g., Kubernetes support) won’t work.
+-Some Docker features (e.g., Kubernetes support) won't work.
 
 
 ### Install Docker Desktop
@@ -166,7 +198,7 @@ Use WSL 2 for Linux containers.
 To make Docker automatically start:
 Open Docker Desktop.
 Go to Settings → General.
-Enable “Start Docker Desktop when you log in”.
+Enable "Start Docker Desktop when you log in".
 
 
 ## For both operating systems
@@ -190,15 +222,31 @@ docker compose up
 
 
 ## Some notes
-1. After the application is started, you can access the chat interface at 0.0.0.0:3000.
+1. After the application is started, you can access the chat interface at `0.0.0.0:3000`
 
-2. If you want to change some settings, the docker-compose.yml has the controls.However changing them IS NOT necessary. In the file you can find 
-  the port(found under huggingchat-ui service)
-  the model name (found under chat-env-generator service)
-  the database name (found under chat-mongo service)
-  the UI name (found under huggingchat-ui service)
-  the API key (found under chat-env-generator service).
+2. Key settings in `docker-compose.yml`:
+   - UI Port: `0.0.0.0:3000` (under `huggingchat-ui` service)
+   - Agent Port: `127.0.0.1:9090:8089` (under `just-web-agent` service)
+   - MongoDB Port: `27017` (under `chat-mongo` service)
+   - Container image versions:
+     - just-web-agent: `ghcr.io/longevity-genie/just-agents:sha-923d91d`
+     - chat-ui: `ghcr.io/longevity-genie/chat-ui/chat-ui:sha-eeb856a`
+     - mongo: `latest`
 
-3. If you have errors from having previously run docker compose, check in terminal with command "docker ps" if there are other containers running that might cause conflicts.
+3. Troubleshooting container conflicts:
+   - Check running containers: `docker ps`
+   - Stop conflicting containers: 
+     ```bash
+     cd /path/to/container/directory
+     docker compose down
+     ```
+   Note: Depending on your system and installation, you might need to use `docker-compose` (with dash) 
+   instead of `docker compose` (without dash).
 
-4. If you want to stop those containers go to the folder where they originated (in terminal using 'cd' command) and run "docker compose down". To avoid such problems for future make sure after each run of 'docker compose up' you run 'docker compose down' or CTRL+C to stop all containers.
+4. Best practices for container management:
+   - Always stop containers when done using either:
+     - `docker compose down` (or `docker-compose down`)
+     - `Ctrl+C` followed by `docker compose down`
+   - To run in background mode, use:
+     - `docker compose up -d`
+   - This prevents port conflicts in future sessions
