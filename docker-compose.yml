@@ -1,7 +1,7 @@
 services:
   just-web-agent:
     container_name: just-web-agent
-    image: ghcr.io/longevity-genie/just-agents:sha-320802c
+    image: ghcr.io/longevity-genie/just-agents:main
     user: "${UID:-1000}:${GID:-1000}"
     environment:
       APP_PORT: "8088" #app port inside container
@@ -54,7 +54,7 @@ services:
 
   huggingchat-ui:
     container_name: just-chat-ui
-    image: ghcr.io/longevity-genie/chat-ui/chat-ui:latest
+    image: ghcr.io/longevity-genie/chat-ui/chat-ui:sha-325df57
     environment:
       ALLOW_INSECURE_COOKIES: "true"
       INCLUDE_DB: "False"
