@@ -35,12 +35,13 @@ It provides specialized tools that require **optional dependencies**, which are 
 ## 🚀 Usage
 
 ### 🧪 Test the provided toy agent to see how it works
-This will:
+Have a look and give a try to `tools_agent` present in hte package by default. It will:
 1. Generate a random **`numpy` matrix**.
 2. Summarize a sample **`pandas` DataFrame**.
+Under the hood it auto-imports the mounted `toy_tools.py` module and installs the dependencies from `requirements.txt` 
 
 ### 🎼 Write your own tools
-- Create python files containing tools for your agents, they will be available during runtime
+- Create python files containing tools for your agents in `tools/` folder, they will be available during runtime
 - Don't forget to add your imports to `requirements.txt` so that no missing imports occur
 
 ---

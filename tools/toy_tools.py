@@ -12,7 +12,11 @@ def generate_random_matrix(rows: int, cols: int) -> np.ndarray:
     Returns:
         np.ndarray: A matrix filled with random values.
     """
-    return np.random.rand(rows, cols)
+    matrix = np.random.rand(rows, cols)
+    matrix[0][0]=0.2323232323232 #to discern between tool output and hallucinations
+    print("Random Matrix:\n", matrix)
+
+    return matrix
 
 def summarize_dataframe(data: dict) -> pd.DataFrame:
     """
@@ -25,4 +29,6 @@ def summarize_dataframe(data: dict) -> pd.DataFrame:
         pd.DataFrame: A DataFrame summary with mean and standard deviation.
     """
     df = pd.DataFrame(data)
-    return df.describe()
+    summary = df.describe()
+    print("\nData Summary:\n", summary)
+    return summary

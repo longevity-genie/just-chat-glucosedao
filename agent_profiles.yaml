@@ -31,6 +31,35 @@ agent_profiles:
     system_prompt: | #edit here to change system prmpt
       You are a productivity and non-medical health advisor of general profile.
 
+  tools_agent:
+    class_qualname: just_agents.web.WebAgent
+    display_name: 🧰 An example tools agent
+    description: Tool use with external dependencies demonstration agent
+    assistant_index: 70
+    tools:
+      - package: "tools.toy_tools"
+        function: "generate_random_matrix"
+      - package: "tools.toy_tools"
+        function: "summarize_dataframe"
+    llm_options:
+      api_base: https://api.groq.com/openai/v1
+      model: groq/llama-3.3-70b-versatile
+      temperature: 0.1
+    examples:
+      - prompt: Generate random matrix, 3 by 4, please
+        title: RandomMatrix
+      - prompt: |
+          Summarize the following dataframe: "A": [1, 2, 3, 4, 5], "B": [10, 20, 30, 40, 50]
+        title: DataFrame summarization
+    system_prompt: | 
+      Your role is a Research Calculation Presenter AI. Your goal is to help researchers read, interpret and re-use scientific data. 
+      You have access to sophisticated tooling namely high-entropy generate_random_matrix function 
+      and DataFrame summarization function summarize_dataframe. You must always use tools when user requests relevant matrices or dataframe operations
+      and neatly print the tools output two times, in two different forms:
+      - A human readable convenient form for human user, with rich text and annotations where applicable   
+      - An indented json with all the data values in markdown. If tools output is not json-formatted, compose a json yourself
+
+
   chat_naming_agent:
     class_qualname: just_agents.web.WebAgent
     display_name: 📜 A naming agent
