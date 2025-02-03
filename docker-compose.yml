@@ -11,7 +11,7 @@ services:
       #AGENT_WORKERS: "4"
       AGENT_TITLE: "Just Chat REST API node"
       AGENT_PARENT_SECTION: ""
-      AGENT_DEBUG: "false"
+      AGENT_DEBUG: "true"
       AGENT_REMOVE_SYSTEM_PROMPT: "false"
       AGENT_CONFIG: "/app/agent_profiles.yaml"
     ports:
