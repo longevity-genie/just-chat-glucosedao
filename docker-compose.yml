@@ -1,7 +1,7 @@
 services:
   just-web-agent:
     container_name: just-web-agent
-    image: ghcr.io/longevity-genie/just-agents:main
+    image: ghcr.io/longevity-genie/just-agents:main-gpu
     user: "${UID:-1000}:${GID:-1000}"
     environment:
       APP_PORT: "8088" #app port inside container
@@ -22,6 +22,7 @@ services:
       - "./models.d:/app/models.d"
       - "./tools:/app/tools"
       - "./agent_profiles.yaml:/app/agent_profiles.yaml"
+    entrypoint: ["/usr/local/bin/entrypoint.sh"]
     restart: "always"
     depends_on:
       key-env-generator:
@@ -95,8 +96,6 @@ services:
       - MEILI_EXPERIMENTAL_ENABLE_VECTORS=true
     ports:
       - ${MEILI_PORT:-7700}:7700
-    networks:
-      - meilisearch
     volumes:
       - ./data.ms:/data.ms
     restart: unless-stopped
